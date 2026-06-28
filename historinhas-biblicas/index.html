@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Historinhas Bíblicas Infantis | Personalize a primeira história</title>
+    <meta
+      name="description"
+      content="Digite o nome da criança e veja uma prévia personalizada de uma historinha bíblica infantil."
+    />
+    <link rel="stylesheet" href="assets/styles.css" />
+    <script
+      src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+      data-utmify-prevent-xcod-sck
+      data-utmify-prevent-subids
+      async
+      defer
+    ></script>
+    <script>
+      window.pixelId = "690d203f78c9e67561d48b87";
+      var a = document.createElement("script");
+      a.setAttribute("async", "");
+      a.setAttribute("defer", "");
+      a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+      document.head.appendChild(a);
+    </script>
+  </head>
+  <body class="name-page">
+    <main class="name-gate" aria-labelledby="gate-title">
+      <section class="gate-panel">
+        <img class="gate-logo" src="assets/images/product-logo.webp" alt="Historinhas Bíblicas Infantis" />
+        <h1 id="gate-title">Qual é o nome da criança que você quer ver brilhando nas histórias bíblicas?</h1>
+        <p class="gate-copy">
+          Digite o nome abaixo e veja uma prévia personalizada, como se a criança já estivesse
+          vivendo uma aventura com Jesus.
+        </p>
+
+        <form class="name-form" id="nameForm" novalidate>
+          <label for="childName">Nome da criança</label>
+          <div class="input-row">
+            <input
+              id="childName"
+              name="childName"
+              type="text"
+              autocomplete="given-name"
+              placeholder="Ex: Davi, Maria, Rafael..."
+              maxlength="28"
+              required
+            />
+            <button type="submit">Ver minha história</button>
+          </div>
+          <p class="form-hint" id="nameError" role="alert" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <aside class="gate-preview" aria-label="Prévia da historinha">
+        <img src="assets/images/hero.webp" alt="Jesus conversando com uma criança em um caminho florido" />
+        <div class="story-bubble gate-bubble">
+          <strong><span data-child-upper>RAFAEL</span></strong> aprendeu com Jesus que a fé em Deus ilumina o caminho, mesmo quando tudo parece difícil.
+        </div>
+      </aside>
+    </main>
+
+    <script src="assets/app.js"></script>
+  </body>
+</html>
