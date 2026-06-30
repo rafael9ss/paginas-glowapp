@@ -674,6 +674,18 @@ input {
   filter: saturate(1.05) contrast(1.02);
 }
 
+.hero-action {
+  display: flex;
+  justify-content: center;
+  margin-top: -12px;
+}
+
+.hero-action .primary-button {
+  min-width: min(420px, 100%);
+  min-height: 58px;
+  box-shadow: 0 16px 38px color-mix(in oklch, var(--leaf-dark) 20%, transparent);
+}
+
 .content-section,
 .carousel-section,
 .testimonials,
