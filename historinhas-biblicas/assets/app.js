@@ -303,6 +303,25 @@
     window.setInterval(render, 1000);
   }
 
+  function bindBuyPulse() {
+    const buttons = Array.from(document.querySelectorAll(".buy-pulse"));
+    if (!buttons.length) return;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (reduceMotion.matches) return;
+
+    const pulse = () => {
+      if (document.hidden) return;
+      buttons.forEach((button) => button.classList.add("is-buy-pulsing"));
+      window.setTimeout(() => {
+        buttons.forEach((button) => button.classList.remove("is-buy-pulsing"));
+      }, 520);
+    };
+
+    window.setTimeout(pulse, 650);
+    window.setInterval(pulse, 2350);
+  }
+
   applyName(currentName());
   bindNameGate();
   bindQuickNameForm();
@@ -310,4 +329,5 @@
   bindCarousel();
   bindCheckoutPlaceholder();
   bindCountdown();
+  bindBuyPulse();
 })();

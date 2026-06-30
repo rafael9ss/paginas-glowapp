@@ -236,7 +236,11 @@ input {
   font-weight: 900;
   padding: 0 22px;
   text-decoration: none;
-  transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+  transition:
+    transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    background 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .name-form button {
@@ -690,11 +694,24 @@ input {
   position: relative;
   isolation: isolate;
   overflow: visible;
-  animation: buyPulseButton 2.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
   transform: translateZ(0);
-  will-change: filter;
+  will-change: transform, box-shadow, filter;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+}
+
+.buy-pulse.is-buy-pulsing {
+  box-shadow:
+    0 18px 42px color-mix(in oklch, var(--leaf-dark) 28%, transparent),
+    0 0 0 9px color-mix(in oklch, var(--gold) 24%, transparent);
+  filter: brightness(1.08);
+  transform: translate3d(0, -2px, 0) scale(1.035);
+}
+
+.checkout-button.buy-pulse.is-buy-pulsing {
+  box-shadow:
+    0 20px 52px color-mix(in oklch, var(--gold) 34%, transparent),
+    0 0 0 10px color-mix(in oklch, var(--gold) 32%, transparent);
 }
 
 .buy-pulse::after {
@@ -712,16 +729,23 @@ input {
 }
 
 @media (hover: none), (pointer: coarse) {
-  .buy-pulse {
-    animation-name: buyPulseButtonMobile;
-    animation-duration: 2.15s;
-  }
-
   .buy-pulse::after {
     inset: -9px;
     border-width: 3px;
-    animation-name: buyPulseRingMobile;
-    animation-duration: 2.15s;
+  }
+
+  .buy-pulse.is-buy-pulsing {
+    box-shadow:
+      0 20px 48px color-mix(in oklch, var(--leaf-dark) 32%, transparent),
+      0 0 0 11px color-mix(in oklch, var(--gold) 32%, transparent);
+    filter: brightness(1.12) saturate(1.06);
+    transform: translate3d(0, -2px, 0) scale(1.045);
+  }
+
+  .checkout-button.buy-pulse.is-buy-pulsing {
+    box-shadow:
+      0 22px 58px color-mix(in oklch, var(--gold) 40%, transparent),
+      0 0 0 12px color-mix(in oklch, var(--gold) 38%, transparent);
   }
 }
 
@@ -1166,11 +1190,35 @@ input {
   color: #fff;
 }
 
-.price {
+.price-block {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.installment-label {
+  color: rgba(255, 255, 255, 0.78);
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.82rem;
+}
+
+.installment-price {
   font-family: var(--display);
-  font-size: clamp(3.2rem, 8vw, 5.8rem);
+  font-size: clamp(3.4rem, 10vw, 6.4rem);
   font-weight: 800;
   line-height: 1;
+  color: color-mix(in oklch, var(--gold) 74%, white);
+  text-shadow: 0 16px 34px rgba(0, 0, 0, 0.18);
+}
+
+.installment-price small {
+  font-family: var(--body);
+  font-size: clamp(1.05rem, 3vw, 1.45rem);
+  font-weight: 950;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .checkout-button {
@@ -1502,38 +1550,7 @@ input {
   .buy-pulse {
     animation: none !important;
     filter: none !important;
-  }
-}
-
-@keyframes buyPulseButton {
-  0%,
-  72%,
-  100% {
-    filter: brightness(1) drop-shadow(0 0 0 rgba(247, 184, 75, 0));
-  }
-
-  12% {
-    filter: brightness(1.05) drop-shadow(0 0 12px rgba(247, 184, 75, 0.35));
-  }
-
-  28% {
-    filter: brightness(1) drop-shadow(0 0 0 rgba(247, 184, 75, 0));
-  }
-}
-
-@keyframes buyPulseButtonMobile {
-  0%,
-  68%,
-  100% {
-    filter: brightness(1) drop-shadow(0 0 0 rgba(247, 184, 75, 0));
-  }
-
-  12% {
-    filter: brightness(1.09) drop-shadow(0 0 18px rgba(247, 184, 75, 0.52));
-  }
-
-  30% {
-    filter: brightness(1) drop-shadow(0 0 0 rgba(247, 184, 75, 0));
+    transform: none !important;
   }
 }
 
@@ -1553,24 +1570,5 @@ input {
   28% {
     opacity: 0;
     transform: scale(1.08);
-  }
-}
-
-@keyframes buyPulseRingMobile {
-  0%,
-  68%,
-  100% {
-    opacity: 0;
-    transform: scale(0.94);
-  }
-
-  12% {
-    opacity: 0.64;
-    transform: scale(1);
-  }
-
-  30% {
-    opacity: 0;
-    transform: scale(1.13);
   }
 }
