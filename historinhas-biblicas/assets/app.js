@@ -269,10 +269,45 @@
     });
   }
 
+  function bindCountdown() {
+    const countdown = document.querySelector("[data-countdown]");
+    if (!countdown) return;
+
+    const time = countdown.querySelector("[data-countdown-time]");
+    const minutes = Number(countdown.dataset.countdownMinutes) || 30;
+    const duration = minutes * 60 * 1000;
+    const storageKey = "historinhas.offerDeadline";
+    let deadline = 0;
+
+    try {
+      deadline = Number(window.localStorage.getItem(storageKey));
+      if (!deadline || deadline <= Date.now()) {
+        deadline = Date.now() + duration;
+        window.localStorage.setItem(storageKey, String(deadline));
+      }
+    } catch (error) {
+      deadline = Date.now() + duration;
+    }
+
+    function render() {
+      const remaining = Math.max(0, deadline - Date.now());
+      const totalSeconds = Math.ceil(remaining / 1000);
+      const displayMinutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+      const displaySeconds = String(totalSeconds % 60).padStart(2, "0");
+
+      if (time) time.textContent = `${displayMinutes}:${displaySeconds}`;
+      countdown.classList.toggle("is-ending", remaining <= 5 * 60 * 1000);
+    }
+
+    render();
+    window.setInterval(render, 1000);
+  }
+
   applyName(currentName());
   bindNameGate();
   bindQuickNameForm();
   bindStorybook();
   bindCarousel();
   bindCheckoutPlaceholder();
+  bindCountdown();
 })();
