@@ -42,6 +42,18 @@
     return titleCaseName(getUrlName() || getStoredName() || FALLBACK_NAME);
   }
 
+  function pageUrl(page, name) {
+    const url = new URL(page, window.location.href);
+    const currentParams = new URLSearchParams(window.location.search);
+
+    currentParams.forEach((value, key) => {
+      if (key !== "nome") url.searchParams.set(key, value);
+    });
+
+    url.searchParams.set("crianca", titleCaseName(name) || FALLBACK_NAME);
+    return `${url.pathname.split("/").pop()}?${url.searchParams.toString()}`;
+  }
+
   function applyName(name) {
     const safeName = titleCaseName(name) || FALLBACK_NAME;
     const upperName = safeName.toLocaleUpperCase("pt-BR");
@@ -95,7 +107,7 @@
       }
 
       saveName(name);
-      window.location.href = `vendas.html?crianca=${encodeURIComponent(name)}`;
+      window.location.href = pageUrl("historinha.html", name);
     });
   }
 
@@ -118,6 +130,48 @@
       url.searchParams.set("crianca", name);
       window.history.replaceState({}, "", url);
     });
+  }
+
+  function bindStorybook() {
+    const storybook = document.querySelector("[data-storybook]");
+    if (!storybook) return;
+
+    const pages = Array.from(storybook.querySelectorAll("[data-story-page]"));
+    const prev = storybook.querySelector("[data-story-prev]");
+    const next = storybook.querySelector("[data-story-next]");
+    const progressText = storybook.querySelector("[data-story-progress-text]");
+    const progressBar = storybook.querySelector("[data-story-progress-bar]");
+    const salesLink = storybook.querySelector("[data-sales-link]");
+    let index = 0;
+
+    if (!pages.length || !prev || !next || !progressText || !progressBar || !salesLink) return;
+
+    function showPage(nextIndex) {
+      index = Math.min(Math.max(nextIndex, 0), pages.length - 1);
+      const isLast = index === pages.length - 1;
+
+      pages.forEach((page, pageIndex) => {
+        page.classList.toggle("is-active", pageIndex === index);
+        page.setAttribute("aria-hidden", pageIndex === index ? "false" : "true");
+      });
+
+      prev.disabled = index === 0;
+      next.hidden = isLast;
+      salesLink.classList.toggle("is-visible", isLast);
+      salesLink.href = pageUrl("vendas.html", currentName());
+      progressText.textContent = `${index + 1} de ${pages.length}`;
+      progressBar.style.width = `${((index + 1) / pages.length) * 100}%`;
+    }
+
+    prev.addEventListener("click", () => showPage(index - 1));
+    next.addEventListener("click", () => showPage(index + 1));
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") showPage(index - 1);
+      if (event.key === "ArrowRight") showPage(index + 1);
+    });
+
+    showPage(0);
   }
 
   function bindCarousel() {
@@ -218,6 +272,7 @@
   applyName(currentName());
   bindNameGate();
   bindQuickNameForm();
+  bindStorybook();
   bindCarousel();
   bindCheckoutPlaceholder();
 })();

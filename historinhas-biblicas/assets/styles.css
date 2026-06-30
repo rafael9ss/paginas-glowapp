@@ -265,6 +265,210 @@ input {
   font-weight: 750;
 }
 
+.story-page {
+  min-height: 100dvh;
+  background:
+    radial-gradient(circle at 18% 0%, color-mix(in oklch, var(--gold) 24%, transparent), transparent 24rem),
+    radial-gradient(circle at 82% 12%, color-mix(in oklch, var(--sky) 22%, transparent), transparent 24rem),
+    linear-gradient(180deg, color-mix(in oklch, var(--mist) 82%, white), var(--page));
+}
+
+.storybook-shell {
+  width: min(1040px, calc(100% - 28px));
+  margin: 0 auto;
+  padding: clamp(24px, 5vw, 58px) 0;
+  display: grid;
+  gap: clamp(20px, 4vw, 34px);
+}
+
+.storybook-intro {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.storybook-logo {
+  width: min(360px, 82vw);
+  max-height: 160px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.storybook-intro .section-label {
+  margin-inline: auto;
+}
+
+.storybook-intro h1 {
+  max-width: 760px;
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(2rem, 5.6vw, 4.5rem);
+  line-height: 0.98;
+  letter-spacing: 0;
+}
+
+.storybook-intro p:last-child {
+  max-width: 680px;
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+}
+
+.storybook-card {
+  width: min(520px, 100%);
+  margin: 0 auto;
+  padding: clamp(12px, 2.4vw, 18px);
+  border-radius: calc(var(--radius) + 14px);
+  background:
+    linear-gradient(180deg, color-mix(in oklch, var(--gold) 14%, white), color-mix(in oklch, var(--paper) 94%, white));
+  box-shadow: var(--deep-shadow);
+}
+
+.storybook-progress {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in oklch, var(--leaf) 14%, white);
+  margin-bottom: 14px;
+}
+
+.storybook-progress span {
+  display: block;
+  width: 14.28%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--leaf), color-mix(in oklch, var(--gold) 68%, var(--leaf)));
+  transition: width 240ms ease;
+}
+
+.storybook-page {
+  display: none;
+}
+
+.storybook-page.is-active {
+  display: grid;
+  gap: 14px;
+  animation: pageIn 220ms ease both;
+}
+
+.storybook-hero-card {
+  width: min(390px, 100%);
+  margin: 0 auto;
+  aspect-ratio: 9 / 14;
+  padding: 9px;
+  box-shadow: 0 18px 50px color-mix(in oklch, var(--leaf-dark) 18%, transparent);
+}
+
+.storybook-bubble {
+  left: 6%;
+  right: 6%;
+  top: 4%;
+  padding: 12px;
+  font-size: clamp(0.78rem, 2.5vw, 0.92rem);
+}
+
+.storybook-figure {
+  margin: 0 auto;
+  width: min(390px, 100%);
+  aspect-ratio: 9 / 14;
+  overflow: hidden;
+  border-radius: calc(var(--radius) + 8px);
+  background: var(--leaf-dark);
+  padding: 8px;
+  box-shadow: 0 18px 50px color-mix(in oklch, var(--leaf-dark) 18%, transparent);
+}
+
+.storybook-figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+.storybook-copy {
+  padding: clamp(14px, 3vw, 18px);
+  border-radius: calc(var(--radius) + 8px);
+  background: color-mix(in oklch, var(--paper) 92%, white);
+  box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--leaf) 10%, transparent);
+}
+
+.storybook-copy span {
+  color: var(--leaf);
+  font-weight: 900;
+}
+
+.storybook-copy h2 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(1.55rem, 4vw, 2.25rem);
+  line-height: 1.04;
+}
+
+.storybook-copy p {
+  margin: 10px 0 0;
+  color: var(--muted);
+}
+
+.storybook-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.storybook-actions [data-story-progress-text] {
+  color: var(--muted);
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.storybook-nav {
+  min-height: 48px;
+  border: 0;
+  border-radius: var(--radius);
+  background: color-mix(in oklch, var(--leaf) 12%, white);
+  color: var(--leaf-dark);
+  cursor: pointer;
+  font-weight: 900;
+  transition: transform 180ms ease, background 180ms ease;
+}
+
+.storybook-nav:hover {
+  background: color-mix(in oklch, var(--gold) 22%, white);
+  transform: translateY(-1px);
+}
+
+.storybook-nav:disabled {
+  opacity: 0.44;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.storybook-continue {
+  display: none;
+  grid-column: 1 / -1;
+  width: 100%;
+  margin-top: 2px;
+  text-align: center;
+}
+
+.storybook-continue.is-visible {
+  display: inline-flex;
+}
+
+@keyframes pageIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .gate-preview,
 .feature-story-card {
   position: relative;
